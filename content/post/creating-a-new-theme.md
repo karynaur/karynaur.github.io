@@ -1,6 +1,6 @@
 ---
 author: "Michael Henderson"
-date: 2014-09-28
+date: 2024-09-28
 linktitle: Creating a New Theme
 next: /tutorials/github-pages-blog
 prev: /tutorials/automated-deployments
