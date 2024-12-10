@@ -1,0 +1,20 @@
+{{ define "main" }}
+<div class="row">
+    <div class="research-themes">
+      {{ $themes := .Site.Data.researchThemes }}
+      {{ range $themes }}
+      <div class="theme">
+        <h2>{{ .title }}</h2>
+        {{if .description}}
+          <p>{{ .description }}</p>
+        {{end}}
+        <ul class="subpoints">
+          {{ range .subpoints }}
+          <li>{{ . }}</li>
+          {{ end }}
+        </ul>
+      </div>
+      {{ end }}
+    </div>
+</div>
+{{ end }}

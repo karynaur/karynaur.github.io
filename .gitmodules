@@ -1,0 +1,3 @@
+[submodule "themes/finite"]
+	path = themes/finite
+	url = https://github.com/lambdafu/hugo-finite.git

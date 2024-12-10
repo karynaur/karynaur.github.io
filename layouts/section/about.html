@@ -1,0 +1,28 @@
+{{ define "main" }}
+<div class="row">
+    <div class="research-themes">
+        <div class="column small-12 medium-10 medium-offset-1 end large-offset-0 large-3 large-push-9">
+            <em>Hey! I am looking for PhD oppurtunities for Fall 2024. If you are interested in my profile, do send me an email at adityasrinivas.menon@gmail.com</em>
+            <hr>
+          </div>
+          <div class="column small-12 medium-10 medium-offset-1 end large-offset-0 large-8 large-pull-3">
+            Hi, I'm Aditya Srinivas Menon, a recent computer science graduate with a keen interest in pushing the boundaries of artificial intelligence to make a positive impact. My academic journey has been driven by a passion for solving complex problems across machine learning, natural language processing, and cross-lingual research. You can learn more about my research themes <a href="/themes">here</a>
+
+            <br><br>
+            <h1>Education</h1>
+            I graduated with B.Tech with Hons. from IIIT Kottayam, maintaining a CGPA of 9.01/10. My honours thesis was based on developing a novel approach to cross-lingual phrase retrieval using deep learning techniques under the guidance of <a href="https://sites.google.com/site/manumadhavancka/home">Dr. Manu Madhavan</a>. My final year project was study on building web-based verb thesaurus for Sanskrit, a low-resource language in India. This work was done under the guidance of <a href="https://www.iiitkottayam.ac.in/#!/faculty/nandini">Dr. Nandini J.Warrier</a>. My courses in college also included machine learning, deep learning, linear algebra, statistics and probability.
+
+            <br><br>
+            <h1>Industry and Research experience</h1>
+
+            My internships at Begin.ai, Bosch India and AdPushUp have given me a taste of the real-world applications of AI. I had the wonderful oppurtunity to be guided by <a href="https://sites.google.com/view/drkonjengbamanand/home">Dr. Konjengbam Anand</a>, who taught me a lot about research, cross-lingual NLP and low-resource languages, which led to the internship at IIT Dharwad and publications at SPECOM'23 and ICDMAI'22. I worked with <a href="https://www.inf.uni-hamburg.de/en/inst/ab/lt/people/chris-biemann.html">Prof. Dr. Chris Biemann</a> from University of Hamburg, Germany, on Interpretable Sentiment Analysis models for low-resource languages. I also spent the summer of 2023 working on end-to-end Person Reidentification pipeline with <a href="https://www.iist.ac.in/avionics/deepak.mishra">Dr. Deepak Mishra</a> during an internship at Indian Institute of Space Science and Technology (IIST). For a detailed overview of my research and expereince, head over to my <a href="/cv/">CV</a> or <a href="{{ .Site.Params.cv_link }}">download it!</a>
+            
+            <br><br>
+            When I'm not diving into complex algorithms, I am actively involved in mentoring, organizing technical events, and supporting underrepresented groups in STEM. 
+          </div>
+    </div>
+</div>
+{{ block "whatisthis" . }}
+{{ partial "whatisthis" . }}
+{{ end }}
+{{ end }}

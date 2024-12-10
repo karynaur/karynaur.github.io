@@ -1,0 +1,69 @@
+{{ define "top-bar-right" }}
+{{ partial "share.html" $ }}
+{{ end }}
+{{ define "title-bar-right" }}
+{{ partial "share.html" $ }}
+{{ end }}
+{{ define "whatisthis" }}
+{{ partial "whatisthis-short.html" . }}
+{{ end }}
+{{ define "main" }}
+<div class="row">
+  <div class="column small-12 medium-10 medium-offset-1 end large-8 large-offset-0">
+    <article class="pub" itemscope itemtype="http://schema.org/CreativeWork">
+      <h1 itemprop="name">{{ .Title }}</h1>
+      <span class="pub-authors" itemprop="author">
+        {{ with .Params.authors }}
+        {{ range $index, $author := . }}
+            {{ if eq $author "Aditya Srinivas Menon" }}
+                <strong>{{ $author }}</strong>{{ if lt (add $index 1) (len .) }}, {{ end }}
+            {{ else }}
+                {{ $author }}{{ if lt (add $index 1) (len .) }}, {{ end }}
+            {{ end }}
+        {{ end }}
+        {{ end }}
+      </span>
+      {{ if .Params.image }}
+      <img src="{{ $.Site.BaseURL }}img/{{ .Params.image }}" class="pub-banner" itemprop="image">
+      {{ end }}
+      <h2>Abstract</h2>
+      <p class="pub-abstract" itemprop="text">{{ .Params.abstract }}</p>
+      <div class="pub-info">
+        {{ if .Params.publication }}
+        <div class="row">
+          <div class="column small-2 medium-1 pub-row-heading">Cite</div>
+          <div class="column small-10 medium-11">
+            {{ with $.Params.bibtex_content }}
+            <div class="bibtex-container">
+              <pre class="bibtex-entry">{{ . }}</pre>
+            </div>
+            {{ end }}
+          </div>
+        </div>
+        {{ end }}
+        <div class="row">
+          <div class="column small-2 medium-1 pub-row-heading">Links</div>
+          <div class="column small-10 medium-11">
+            {{ partial "pub-links" . }}
+          </div>
+        </div>
+        {{ if .Params.doi }}
+        <div class="row">
+          <div class="column small-2 medium-1 pub-row-heading">DOI</div>
+          <div class="column small-10 medium-11">
+            <a href="https://doi.org/{{ .Params.doi }}" target="_blank" rel="noopener noreferrer">
+              {{ .Params.doi }}
+            </a>
+          </div>
+        </div>
+        {{ end }}
+        <div class="row">
+          <div class="column small-2 medium-1 pub-row-heading">Date</div>
+          <div class="column small-10 medium-11" itemprop="datePublished">{{ .Date.Format "January, 2006" }}</div>
+        </div>
+      </div>
+      <div class="pub-content">{{ .Content }}</div>
+    </article>
+  </div>
+</div>
+{{ end }}

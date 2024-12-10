@@ -1,0 +1,18 @@
+<i class="fa-li fa {{ partial "pub-icon" . }}" style="padding-top:3px;"></i>
+<a href="{{ .Permalink }}">{{ .Title | safeHTML }}</a>
+<br />
+<div>
+    <span class="pub-authors" itemprop="author" style="font-style: italic; font-size: 0.97em;">
+        {{ with .Params.authors }}
+        {{ $lastIndex := sub (len .) 1 }}
+        {{ range $index, $author := . }}
+            {{ if eq $author "Aditya Srinivas Menon" }}
+                <strong>{{ $author }}</strong>{{ if lt $index $lastIndex }},{{ end }}
+            {{ else }}
+                {{ $author}}{{ if lt $index $lastIndex }},{{ end }}
+            {{ end }}
+        {{ end }}
+        {{ end }}
+    </span>
+</div>
+<span>{{ partial "pub-links" . }}</span>

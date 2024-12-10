@@ -1,0 +1,165 @@
+baseurl = "https://karynaur.github.io/"
+title = "Aditya Srinivas Menon"
+languageCode = "en-us"
+
+
+theme="finite"
+ignoreFiles = [ "\\.qmd$", "\\.ipynb$", "\\.py$" ]
+builddrafts = true 
+
+[markup]
+  [markup.highlight]
+      codeFences = true
+      guessSyntax = true
+      hl_Lines = ""
+      lineNoStart = 1
+      lineNos = true
+      lineNumbersInTable = false
+      tabWidth = 4
+      noClasses = true
+      style = "catppuccin-latte" #perldoc
+  [markup.goldmark.renderer]
+    unsafe= true
+
+
+  [imaging]
+    quality = 70
+    resampleFilter = "Lanczos"
+
+
+
+
+[params]
+
+  # Date format (refer to Go's date format: http://flippinggodateformat.com)
+  # Examples: "Mon, Jan 2, 2006" or "2006-01-02"
+  #date_format = "2 January 2006"
+
+  # Publications can have a Params.publication for citation references.
+  # Publications can have a Params.kind, such as "book".
+  # Both parameters are mapped to an icon in partials/pub-icon.html.
+
+  bio_full = "I am a research intern at Sony Research India with 5+ years of experience in Deep Learning, Machine Learning and writing peer-reviewed papers. Winner of 6+ national and international level hackathons, writing award winning content and providing technical solutions as a freelancer at upwork. I usually train models on the weekdays and think about training models in the weekends."
+  bio_twitter = "karynaur_"
+
+  # Title of posts section on main page.
+  posts_title = "Posts"
+
+  # Number of posts to show on main page.
+  posts_count = 2
+
+  # Title of publications section on main page.
+  pubs_title = "Publications"
+
+  # Number of publications to show on main page.
+  pubs_count = 2 
+  avatar = "/img/portrait_dia.jpg"
+  cv_link = "/Aditya_Research.pdf"
+  date_format = "2 January 2006"
+
+  [params.utterances]
+    use_utterances = true
+    repo_name = "karynaur/karynaur.github.io"
+    issue_term = "title" # url, pathname, or title
+    theme = "github-dark"
+    label = "comments :crystal_ball:"
+
+  [[params.education]]
+    course = "B.Tech in Computer Science with Hons."
+    institution = "IIIT Kottayam"
+    ins = "IIIT Kottayam"
+    year = 2024
+
+  [[params.location]]
+    city = 'Bangalore, India'
+
+  [[params.work]]
+    company = "Sony Research India"
+    year = "2024-present"
+    link = "https://www.sonyresearchindia.com/"
+  
+   [[params.work]]
+    company = "University of Hamburg, Germany"
+    year = "2023"
+    link = "https://www.uni-hamburg.de/en.html"
+
+     [[params.work]]
+    company = "IIT Dharwad"
+    year = "2023"
+    link = "https://www.iitdh.ac.in/"
+
+     [[params.work]]
+    company = "IIST Trivandrum"
+    year = "2023"
+    link = "https://www.iist.ac.in/"
+
+    [[params.work]]
+    company = "AdPushUp"
+    year = "2023-2024"
+    link = "https://www.adpushup.com"
+
+     [[params.work]]
+    company = "Bosch India"
+    year = "2022"
+    link = "https://www.bosch.in/our-company/bosch-in-india/"
+
+     [[params.work]]
+    company = "Begin.ai"
+    year = "2021-2022"
+    link = "https://begin.ai"
+
+  [[params.social]]
+    icon = "envelope"
+    icon_pack = "fa"
+    link = "mailto:adityasrinivas.menon@gmail.com"
+    text = "adityasrinivas.menon@gmail.com"
+      
+  [[params.social]]
+    icon = "twitter"
+    icon_pack = "fa"
+    link = "https://twitter.com/karynaur_"
+    text = "@karynaur_"
+    site = "Twitter"
+
+  [[params.social]]
+    icon = "github"
+    icon_pack = "fa"
+    link = "//https://github.com/karynaur"
+    text = "karynaur"
+    site = "GitHub"
+
+  [[params.social]]
+    icon = "google-scholar"
+    icon_pack = "ai"
+    link = "https://scholar.google.com/citations?user=98H1a68AAAAJ&hl=en"
+    text = "Google Scholar"
+
+
+
+# Navigation Links
+# The weight parameter defines the order that the links will appear in.
+
+[[menu.main]]
+  name = "Publications"
+  url = "/publication/"
+  weight = 2
+
+[[menu.main]]
+  name = "Blog"
+  url = "/post/"
+  weight = 3
+
+[[menu.main]]
+  name = "About"
+  url = "/about"
+  weight = 4
+
+[[menu.main]]
+  name = "Research Themes"
+  url = "/themes/"
+  weight = 5
+
+[[menu.main]]
+  name = "CV"
+  url = "/cv/"
+  weight = 6

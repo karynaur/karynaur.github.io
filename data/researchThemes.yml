@@ -1,0 +1,19 @@
+- title: "Speech"
+  description: "Most of my work has been conducted at Sony Research India."
+  subpoints:
+    - "Automatic Speech Recognition (ASR), Speaker Diarization (SD) and Voice Activity Detection (VAD) in Indian languages"
+    - "Disentangling speaker and language information from speech"
+    - "Efficient replacement for self-attention in Transformer models for speech"
+- title: "Language"
+  description: "Personal interest and ongoing research."
+  subpoints:
+    - "LLMs for low-resource languages using Parameter-efficient Transfer Learning"
+    - "Interpretability of LLMs"
+    - "Cross-lingual Information Retrieval"
+    - "Evaluation on multilingual datasets"
+- title: "Tabular Data"
+  description: "Extremely fun and easy to train, do not complain."
+  subpoints:
+    - "Interpretable models for tabular data"
+    - "Self-supervised learning for Anomaly Detection"
+    - "Can deep learning even beat XGBoost? In this lifetime?"

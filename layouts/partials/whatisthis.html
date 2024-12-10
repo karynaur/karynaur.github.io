@@ -1,0 +1,53 @@
+<footer class="whatisthis">
+  <hr />
+  <div class="row">
+    <div class="column small-12 medium-4">
+      <h1>About</h1>
+      <figure class="full-figure">
+    <img src="{{ .Site.Params.avatar }}" alt="Portrait of the author">
+    {{ if index .Site.Params "bio_full" }}{{ end }}
+      </figure>
+    </div>
+    <div class="column small-12 medium-4">
+      {{ if isset .Site.Params "work" }}
+      <h1>Internships</h1>
+      <ul class="ul-edu fa-ul">
+    {{ range $.Site.Params.work }}
+    <li><i class="fa-li fa fa-laptop"></i>
+          <a href={{.link}}>{{ .company }}</a>, {{ .year }} 
+        </li>
+        {{ end }}
+      </ul>
+      {{ end }}
+      {{ if isset .Site.Params "education" }}
+      <h1>Education</h1>
+      <ul class="ul-edu fa-ul">
+    {{ range $.Site.Params.education }}
+    <li><i class="fa-li fa fa-graduation-cap"></i>
+          {{ .course }} <br> {{ .year }} <br> {{ .institution }} <br>
+        </li>
+        {{ end }}
+      </ul>
+      {{ end }}
+      <h1 id="contact">Location</h1>
+      <ul class="ul-loc fa-ul">
+        {{ range $.Site.Params.location }}
+        <li><i class="fa-li fa fa-map"></i>
+              {{ .city }} 
+            </li>
+            {{ end }}
+          </ul>
+    </div>
+    <div class="column small-12 medium-4">
+      <h1 id="contact">Contact</h1>
+      <ul class="fa-ul">
+    {{ range $.Site.Params.social }}
+    <li><i class="fa-li {{ .icon_pack }} {{ .icon_pack}}-{{ .icon }}" style="padding-top:3px;"></i><a href="{{ .link }}">{{ .text }}</a>{{ if .site}} on {{ .site }}{{ end }}</li>
+    {{ end }}
+      </ul>
+      {{ partial "contact" . }}
+      <h1 id="contact">Bio</h1>
+      {{ .Site.Params.bio_full }}
+    </div>
+  </div>
+</footer>

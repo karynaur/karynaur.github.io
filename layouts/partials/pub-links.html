@@ -1,0 +1,30 @@
+{{ with $.Params.bibtex_content }}
+<div class="bibtex-container">
+  <!-- <pre class="bibtex-entry">{{ . }}</pre> -->
+  <button class="button pub-link hollow" id="copy-bibtex-btn" onclick="copyBibTeX(this, `{{ . | htmlEscape }}`)">Copy BibTeX</button>
+</div>
+{{ end }}
+
+{{ with $.Params.url_pdf }}<a class="button pub-link hollow" href="{{ . | absURL }}">PDF</a>{{ end }}
+{{ with $.Params.url_slides }}<a class="button pub-link hollow" href="{{ . | absURL }}">Slides</a>{{ end }}
+{{ with $.Params.url_video }}<a class="button pub-link hollow" href="{{ . | absURL }}">Video</a>{{ end }}
+{{ with $.Params.url_code }}<a class="button pub-link hollow" href="{{ . | absURL }}">Code</a>{{ end }}
+{{ with $.Params.url_dataset }}<a class="button pub-link hollow" href="{{ . | absURL }}">Dataset</a>{{ end }}
+{{ with $.Params.url_project }}<a class="button pub-link hollow" href="{{ . | absURL }}">Project</a>{{ end }}
+
+{{ range $.Params.url_custom }}
+<a class="button pub-link hollow" href="{{ .url | absURL }}">{{ .name }}</a>
+{{ end }}
+
+<script>
+function copyBibTeX(button, bibtex) {
+  navigator.clipboard.writeText(bibtex).then(function() {
+    button.innerText = 'Copied!';
+    setTimeout(() => {
+      button.innerText = 'Copy BibTeX';
+    }, 3000); // Reset after 3 seconds
+  }, function(err) {
+    console.error('Failed to copy BibTeX: ', err);
+  });
+}
+</script>
