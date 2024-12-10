@@ -38,7 +38,7 @@ builddrafts = true
   # Publications can have a Params.kind, such as "book".
   # Both parameters are mapped to an icon in partials/pub-icon.html.
 
-  bio_full = "I am a research intern at Sony Research India with 5+ years of experience in Deep Learning, Machine Learning and writing peer-reviewed papers. Winner of 6+ national and international level hackathons, writing award winning content and providing technical solutions as a freelancer at upwork. I usually train models on the weekdays and think about training models in the weekends."
+  bio_full = "I am a research intern at Sony Research India with 5+ years of experience in Deep Learning, Machine Learning and writing peer-reviewed papers. Winner of 6+ national and international level hackathons, writing award winning content and providing technical solutions as a freelancer at Upwork. I usually train models on the weekdays and think about training models in the weekends."
   bio_twitter = "karynaur_"
 
   # Title of posts section on main page.
