@@ -1,18 +1,25 @@
 {{ define "main" }}
-<head>
+
     <style>
-    *{margin:0;padding:0}
-    html, body {height:100%;width:100%;overflow:hidden}
-    table {height:100%;width:100%;table-layout:static;border-collapse:collapse}
-    iframe {height:100%;width:100%}
-    .content {height:100%}
+    .pdf {height:100%;width:100%}
+
     </style>
-    </head>
-      <body>
-    <object
-        data="https://raw.githubusercontent.com/karynaur/junk_files/refs/heads/main/Aditya_Research.pdf"
-        type="application/pdf">
-        <iframe src="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/karynaur/junk_files/refs/heads/main/Aditya_Research.pdf&embedded=true"></iframe>
-    </object>
-      </body>
-{{ end }}
+    <script type="text/javascript">
+        const viewerConfig = {
+            embedMode: "FULL_WINDOW"
+        };
+        document.addEventListener("adobe_dc_view_sdk.ready", function(){ 
+            var adobeDCView = new AdobeDC.View({clientId: "9d040aa05c79465f86b8bfaff4fc97ba", divId: "adobe-dc-view"});
+            adobeDCView.previewFile({
+                content:{location: {url: "/Aditya_Research.pdf"}},
+                metaData:{fileName: "Aditya_Research.pdf"}
+            }, {defaultViewMode: "FIT_WIDTH",showAnnotationTools: false});
+        }, viewerConfig);
+    </script>
+    <script src="https://acrobatservices.adobe.com/view-sdk/viewer.js"></script>
+
+    
+    <div id="adobe-dc-view" style="height: 82vh; width: 100vw;"></div>
+        
+        
+    {{ end }}
