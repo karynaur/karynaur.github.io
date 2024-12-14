@@ -1,0 +1,10 @@
+project:
+  type: hugo
+      
+format: 
+  hugo-md:
+    code-copy: true
+    code-overflow: wrap
+  
+execute: 
+  warning: false
