@@ -9,6 +9,8 @@ math = true
 
 So I recently made a classifier for the MNIST handwritten digits dataset using PyTorch and later, after celebrating for a while, I thought to myself, "Can I recreate the same model in vanilla python?" Of course, I was going to use NumPy for this. Instead of trying to replicate NumPy's beautiful matrix multiplication, my purpose here was to gain a better understanding of the model by reinventing the wheel.
 
+<!--more-->
+
 I challenged myself to make a similar classifier in numpy and learn some of the core concepts of Deep Learning along the way. You can find the code in my [GitHub repository](https://github.com/karynaur/mnist-from-numpy).
 
 <hr>
@@ -38,16 +40,23 @@ import matplotlib.pyplot as plt
 Define a function to take the utf-8 encoded data, decompress it and convert it into a NumPy array. This code was taken from a notebook by George Hotz which you can find [here](https://github.com/geohot/ai-notebooks/blob/master/mnist_from_scratch.ipynb).
 
 ``` python
-def fetch(url: str) -> np.array:
-    data = requests.get(url).content
+path='/home/karynaur/data/'
+def fetch(url):
+    fp = os.path.join(path, hashlib.md5(url.encode('utf-8')).hexdigest())
+    print(fp, url)
+    if os.path.isfile(fp):
+        with open(fp, "rb") as f:
+            data = f.read()
+    else:
+        with open(fp, "wb") as f:
+            data = requests.get(url).content
+            f.write(data)
     return np.frombuffer(gzip.decompress(data), dtype=np.uint8).copy()
 
-base_url = "https://github.com/karynaur/mnist-from-numpy/raw/refs/heads/main/data/"
-
-X = fetch(base_url + "train-images-idx3-ubyte.gz")[0x10:].reshape((-1, 28, 28))
-Y = fetch(base_url + "train-labels-idx1-ubyte.gz")[8:]
-X_test = fetch(base_url + "t10k-images-idx3-ubyte.gz")[0x10:].reshape((-1, 28*28))
-Y_test = fetch(base_url + "t10k-labels-idx1-ubyte.gz")[8:]
+X = fetch("http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz")[0x10:].reshape((-1, 28, 28))
+Y = fetch("http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz")[8:]
+X_test = fetch("http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz")[0x10:].reshape((-1, 28*28))
+Y_test = fetch("http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz")[8:]
 
 print("Shape of training data, X = ", X.shape)
 print("Shape of training labels, Y = ", Y.shape)
@@ -55,6 +64,10 @@ print("Shape of test data, X_test = ", X_test.shape)
 print("Shape of test labels, Y_test = ", Y_test.shape)
 ```
 
+    /home/karynaur/data/23278f029ff68f1e993776e500ce06b9 http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz
+    /home/karynaur/data/d8b415e67abd11881e156b8f111d3300 http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz
+    /home/karynaur/data/b0cdab8e37ae7c1c5560ee858afaac1d http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz
+    /home/karynaur/data/d4fdde61aca9f72d5fe2315410bb46a5 http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz
     Shape of training data, X =  (60000, 28, 28)
     Shape of training labels, Y =  (60000,)
     Shape of test data, X_test =  (10000, 784)
@@ -99,7 +112,7 @@ l2 = init(128, 10)
 
 The neural network is going to be a simple network of three layers. The input layer consists of $784$ units corresponding to every pixel in the $28$ by $28$ image from the MNIST dataset. The second layer(hidden layer) drops down to $128$ units and lastly the final layer with $10$ units corresponding to digits $0–9$.
 
-{{< figure src="NeuralNetworkVisualization_Manim.png" title="Network architecture. For the sake of simplicity, only one connection from each unit has been shown." width=400 class=figure >}}
+{{< figure src="network.png" title="Network architecture. For the sake of simplicity, only one connection from each unit has been shown." width=400 class=figure >}}
 
 Thus l1 is a matrix of size $(784,128)$ and l2 is a matrix of size $(128,10)$.
 
@@ -248,7 +261,7 @@ def forward_backward_pass(x, y):
 
 Let us go over the code line by line, and understand how it works.
 
-\Y_train\\ is essentially a vector of $50,000$ elements, having the correct digit corresponding to the images in \X_train\\
+Y_train is essentially a vector of $50,000$ elements, having the correct digit corresponding to the images in X_trains.
 
 ``` python
 ex = np.array(Y_train[1]).reshape(1, -1)
@@ -257,7 +270,7 @@ ex
 
     array([[3]], dtype=uint8)
 
-On the other hand our model outputs a vector of 10 elements for each training example. Therefore our primary task is to convert the Y_train into a vector having $1$ corresponding to the "correct" digit and 0 for the rest.
+On the other hand our model outputs a vector of 10 elements for each training example. Therefore our primary task is to convert the Y_train into a vector having $1$ corresponding to the "correct" digit and $0$ for the rest.
 
 ``` python
 example_out = np.zeros((len(ex), 10), np.float32)
@@ -278,7 +291,13 @@ x_l2 = x_sigmoid.dot(l2)
 out = softmax(x_l2)
 ```
 
-In the first line x is matrix multiplied with the first layer and is normalized by passing through the sigmoid function. The sigmoid product is later matrix multiplied with the second layer and is passed through the softmax function to get the output vector of size 10, similar to our target vector.
+In the first line x is matrix multiplied with the first layer and is normalized by passing through the sigmoid function.
+
+{{< figure src="network_sigmoid.png" title="Network architecture. For the sake of simplicity, only one connection from each unit has been shown." width=550 class=figure >}}
+
+The sigmoid product is later matrix multiplied with the second layer and is passed through the softmax function to get the output vector of size 10, similar to our target vector.
+
+{{< figure src="network_softmax.png" title="Network architecture. For the sake of simplicity, only one connection from each unit has been shown." width=550 class=figure >}}
 
 Now it's time to backpropagate and update our weights. Our aim here is to find matrices similar in shape to that of l1 and l2, that can be subtracted from l1 and l2 to get closer to the ideal answer by minimising error.
 
@@ -290,7 +309,7 @@ This calculates the error in the current epoch along with its direction. By how 
 
 Let us have a look at what 'out' really is:
 
-$out = softmax(x_l2)$
+$out = softmax(x\\_l2)$
 
 It is the product of our neural network.
 
@@ -304,7 +323,7 @@ error= 2 * (out - targets) / out.shape[0] * d_softmax(x_l2)
 
 But what exactly is x_l2?
 
-$x_l2 = x_sigmoid@l2$
+$x\\_l2 = x\\_sigmoid@l2$
 
 We now know by how much we need to change x_l2, but x_l2 is the product of the sigmoid output of the first layer and the l2, and we cannot change it. We only have control over the weights! So to turn the previous error into something that can be subtracted from l2 let us define a $update_l2$.
 
@@ -328,7 +347,7 @@ With this we come to the end of forward and backward pass.
 
 ## Training loop
 
-Now comes the training part. We shall perform Stochastic Gradient Descent by sending our training set in batches of $128$ with a learning rate of $0.001$. We can do this by simply creating a sample set containing $128$ elements randomly chosen from 0 to $50,000$ (the size of X_train), and extracting all elements from $X_train$ and $Y_train$ having the respective indices.
+Now comes the training part. We shall perform Stochastic Gradient Descent by sending our training set in batches of $128$ with a learning rate of $0.001$. We can do this by simply creating a sample set containing $128$ elements randomly chosen from 0 to $50,000$ (the size of X_train), and extracting all elements from X_train and Y_train having the respective indices.
 
 ``` python
 epochs = 10000
@@ -378,7 +397,7 @@ val_accuracies.append(val_acc.item())
 Putting it all together inside a for loop:
 
 ``` python
-epochs = 10000
+epochs = 10
 lr = 0.001
 batch = 128
 
@@ -411,25 +430,6 @@ for i in range(epochs):
 ```
 
     For 0th epoch: train accuracy: 0.086 | validation accuracy:0.070
-    For 500th epoch: train accuracy: 0.617 | validation accuracy:0.648
-    For 1000th epoch: train accuracy: 0.703 | validation accuracy:0.740
-    For 1500th epoch: train accuracy: 0.828 | validation accuracy:0.765
-    For 2000th epoch: train accuracy: 0.836 | validation accuracy:0.780
-    For 2500th epoch: train accuracy: 0.781 | validation accuracy:0.790
-    For 3000th epoch: train accuracy: 0.758 | validation accuracy:0.797
-    For 3500th epoch: train accuracy: 0.859 | validation accuracy:0.803
-    For 4000th epoch: train accuracy: 0.828 | validation accuracy:0.810
-    For 4500th epoch: train accuracy: 0.844 | validation accuracy:0.813
-    For 5000th epoch: train accuracy: 0.820 | validation accuracy:0.817
-    For 5500th epoch: train accuracy: 0.820 | validation accuracy:0.818
-    For 6000th epoch: train accuracy: 0.828 | validation accuracy:0.821
-    For 6500th epoch: train accuracy: 0.852 | validation accuracy:0.821
-    For 7000th epoch: train accuracy: 0.844 | validation accuracy:0.822
-    For 7500th epoch: train accuracy: 0.789 | validation accuracy:0.823
-    For 8000th epoch: train accuracy: 0.805 | validation accuracy:0.824
-    For 8500th epoch: train accuracy: 0.781 | validation accuracy:0.825
-    For 9000th epoch: train accuracy: 0.781 | validation accuracy:0.825
-    For 9500th epoch: train accuracy: 0.812 | validation accuracy:0.826
 
 And YESSS! It is clear from the output that the model has learnt how to predict.
 
@@ -440,14 +440,14 @@ Now let us visualize the training and validation accuracy.
 plt.plot(accuracies)
 ```
 
-<img src="index_files/figure-markdown_strict/cell-27-output-1.png" width="645" height="411" />
+<img src="index_files/figure-markdown_strict/cell-27-output-1.png" width="662" height="413" />
 
 ``` python
 # plot accuracies 
 plt.plot(val_accuracies)
 ```
 
-<img src="index_files/figure-markdown_strict/cell-28-output-1.png" width="645" height="411" />
+<img src="index_files/figure-markdown_strict/cell-28-output-1.png" width="662" height="411" />
 
 The training accuracy fluctuates but the validation accuracy increases initially and plateaus later on, signifying that the model has reached its limit.
 
@@ -459,7 +459,7 @@ test_acc = (test_out == Y_test).mean().item()
 print(f'Test accuracy = {test_acc*100:.2f}%')
 ```
 
-    Test accuracy = 83.69%
+    Test accuracy = 7.35%
 
 Can it handle an ideal test? Inspired by George Hotz from his notebook, let us test our model on something that looks like a 7.
 
@@ -476,10 +476,12 @@ m = np.concatenate([np.concatenate([[x]*4 for x in y]*4) for y in m])
 m = m.reshape(1,-1)
 plt.imshow(m.reshape(28,28))
 x = np.argmax(sigmoid(m.dot(l1)).dot(l2),axis=1)
-x
+print('Ground truth: 7')
+print('Predicted:', x.item())
 ```
 
-    array([7])
+    Ground truth: 7
+    Predicted: 6
 
 <img src="index_files/figure-markdown_strict/cell-30-output-2.png" width="415" height="411" />
 
@@ -498,10 +500,12 @@ n = np.concatenate([np.concatenate([[x]*4 for x in y]*4) for y in n])
 n = n.reshape(1,-1)
 plt.imshow(n.reshape(28,28))
 x = np.argmax(sigmoid(n.dot(l1)).dot(l2),axis=1)
-x
+print('Ground truth: 7')
+print('Predicted:', x.item())
 ```
 
-    array([1])
+    Ground truth: 7
+    Predicted: 6
 
 <img src="index_files/figure-markdown_strict/cell-31-output-2.png" width="415" height="411" />
 

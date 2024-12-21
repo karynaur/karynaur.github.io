@@ -5,6 +5,8 @@ format:
   hugo-md:
     code-copy: true
     code-overflow: wrap
+  html:
+    copy-code: true
   
 execute: 
   warning: false
